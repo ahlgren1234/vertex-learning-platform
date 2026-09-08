@@ -45,7 +45,7 @@ export function Kbd({ children }: { children: ReactNode }) {
   return (
     <kbd
       className={cn(
-        "rounded-[6px] border border-neutral-200 bg-neutral-50 px-1.5 py-0.5",
+        "shrink-0 whitespace-nowrap rounded-[6px] border border-neutral-200 bg-neutral-50 px-1.5 py-0.5",
         "font-sans text-[11px] font-medium text-neutral-500",
       )}
     >

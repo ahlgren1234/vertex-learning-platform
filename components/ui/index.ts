@@ -12,6 +12,12 @@ export {
 export { Breadcrumbs, type BreadcrumbsProps, type Crumb } from "./breadcrumbs";
 export { Pagination, type PaginationProps } from "./pagination";
 export { Navbar, type NavbarProps, type NavItem } from "./navbar";
+export {
+  SiteHeader,
+  type SiteHeaderProps,
+  type SiteHeaderNavItem,
+} from "./site-header";
+export { HomeSearch, type HomeSearchProps } from "./home-search";
 export { Logo, type LogoProps } from "./logo";
 export {
   Card,
