@@ -1,5 +1,7 @@
 import Link from "next/link";
+import { SignInButton, SignUpButton, Show, UserButton } from "@clerk/nextjs";
 import { cn } from "@/lib/cn";
+import { Button } from "@/components/ui/button";
 import { Icon } from "@/components/ui/icon";
 import { Logo } from "@/components/ui/logo";
 
@@ -9,8 +11,9 @@ import { Logo } from "@/components/ui/logo";
  * primitive it is not a bordered card: it sits directly on the canvas with a
  * single hairline along the bottom.
  *
- * The notifications bell is presentational (AGENTS.md §7). The avatar is a
- * placeholder until Clerk is wired.
+ * The notifications bell is presentational (AGENTS.md §7). The account area is
+ * wired to Clerk: signed-out visitors see Log in / Sign up, signed-in visitors
+ * get the `UserButton`. Browsing stays public — nothing here gates a route.
  */
 export interface SiteHeaderNavItem {
   label: string;
@@ -65,12 +68,29 @@ export function SiteHeader({ items = DEFAULT_ITEMS, className }: SiteHeaderProps
           >
             <Icon name="bell" size={20} />
           </button>
-          <span
-            aria-label="Your account"
-            className="grid size-9 place-items-center overflow-hidden rounded-full bg-neutral-200 text-neutral-400 ring-1 ring-neutral-300"
-          >
-            <Icon name="user" variant="filled" size={20} />
-          </span>
+          <Show when="signed-out">
+            <div className="flex items-center gap-2 sm:gap-3">
+              <SignInButton mode="modal">
+                <Button variant="text" className="h-9">
+                  Log in
+                </Button>
+              </SignInButton>
+              <SignUpButton mode="modal">
+                <Button variant="primary" className="h-9 px-4 text-[14px]">
+                  Sign up
+                </Button>
+              </SignUpButton>
+            </div>
+          </Show>
+          <Show when="signed-in">
+            <UserButton
+              appearance={{
+                elements: {
+                  avatarBox: "size-9 ring-1 ring-neutral-300",
+                },
+              }}
+            />
+          </Show>
         </div>
       </div>
     </header>
