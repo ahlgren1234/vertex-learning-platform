@@ -44,6 +44,14 @@ export interface CourseCardProps {
   duration: string;
   modules: string;
   icon?: ReactNode;
+  /** override the icon tile styling (default: solid neutral-900 / white) */
+  iconClassName?: string;
+  /**
+   * "inline" (default) — icon sits left of the title, as documented on
+   * `/design-system`. "stacked" — icon on its own row, serif title beneath, and
+   * the meta row is separated by a hairline and pinned to the card's bottom.
+   */
+  layout?: "inline" | "stacked";
   className?: string;
 }
 
@@ -54,14 +62,51 @@ export function CourseCard({
   duration,
   modules,
   icon,
+  iconClassName,
+  layout = "inline",
   className,
 }: CourseCardProps) {
+  const tile = (
+    <div
+      className={cn(
+        "grid shrink-0 place-items-center rounded-[12px] text-[18px] font-semibold",
+        layout === "stacked" ? "size-14" : "size-12",
+        iconClassName ?? "bg-neutral-900 text-white",
+      )}
+    >
+      {icon ?? "N"}
+    </div>
+  );
+
+  const meta = (
+    <>
+      <MetaItem icon={<Icon name="bar-chart" size={16} />}>{level}</MetaItem>
+      <MetaItem icon={<Icon name="clock" size={16} />}>{duration}</MetaItem>
+      <MetaItem icon={<Icon name="folder" size={16} />}>{modules}</MetaItem>
+    </>
+  );
+
+  if (layout === "stacked") {
+    return (
+      <Card className={cn("min-h-[288px]", className)}>
+        {tile}
+        <h3 className="mt-5 font-display text-[20px] font-semibold text-neutral-900">
+          {title}
+        </h3>
+        <p className="mt-2 text-[14px] leading-5 text-neutral-500">
+          {description}
+        </p>
+        <div className="mt-auto flex flex-wrap items-center gap-x-5 gap-y-2 border-t border-neutral-100 pt-4">
+          {meta}
+        </div>
+      </Card>
+    );
+  }
+
   return (
     <Card className={className}>
       <div className="flex items-start gap-4">
-        <div className="grid size-12 shrink-0 place-items-center rounded-[12px] bg-neutral-900 text-[18px] font-semibold text-white">
-          {icon ?? "N"}
-        </div>
+        {tile}
         <div className="min-w-0">
           <h3 className="text-heading-3 font-semibold text-neutral-900">
             {title}
@@ -71,11 +116,7 @@ export function CourseCard({
           </p>
         </div>
       </div>
-      <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-2">
-        <MetaItem icon={<Icon name="bar-chart" size={16} />}>{level}</MetaItem>
-        <MetaItem icon={<Icon name="clock" size={16} />}>{duration}</MetaItem>
-        <MetaItem icon={<Icon name="folder" size={16} />}>{modules}</MetaItem>
-      </div>
+      <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-2">{meta}</div>
     </Card>
   );
 }

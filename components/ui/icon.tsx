@@ -22,6 +22,8 @@ export type IconName =
   | "chevron-right"
   | "chevron-left"
   | "chevron-down"
+  | "arrow-right"
+  | "star"
   | "external-link"
   | "check-circle"
   | "lock"
@@ -82,6 +84,15 @@ const OUTLINE: Record<IconName, React.ReactNode> = {
   "chevron-right": <path d="m9 6 6 6-6 6" />,
   "chevron-left": <path d="m15 6-6 6 6 6" />,
   "chevron-down": <path d="m6 9 6 6 6-6" />,
+  "arrow-right": (
+    <>
+      <path d="M5 12h14" />
+      <path d="m13 6 6 6-6 6" />
+    </>
+  ),
+  star: (
+    <path d="m12 3 2.6 5.3 5.8.8-4.2 4.1 1 5.8-5.2-2.7-5.2 2.7 1-5.8-4.2-4.1 5.8-.8L12 3Z" />
+  ),
   "external-link": (
     <>
       <path d="M14 4h6v6" />
